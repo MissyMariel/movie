@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Streaming Service</title>
+    <title>NetPeke</title>
     
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
@@ -19,14 +19,23 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#genre">Genre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#movies">Movies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tv-series">TV Series</a>
                     </li>
                 </ul>
             </div>
         </nav>
     </header>
 
-    <section class="featured">
+    <section id="home" class="featured py-5">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -34,15 +43,7 @@
                 <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
             </ol>
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="cr1.jpg" class="d-block w-100" alt="Featured Movie 1">
-                </div>
-                <div class="carousel-item">
-                    <img src="cr2.jpg" class="d-block w-100" alt="Featured Movie 2">
-                </div>
-                <div class="carousel-item">
-                    <img src="c3.webp" class="d-block w-100" alt="Featured Movie 3">
-                </div>
+                
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -54,58 +55,138 @@
             </a>
         </div>
     </section>
-    
-    <section class="movie-categories py-5">
+
+    <section id="genre" class="py-5">
         <div class="container">
-            <h2 class="text-center mb-4">Movie Categories</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <h4>Trending</h4>
-                    <div class="movie-grid">
-                        <div class="movie-card">
-                            <img src="11.jpg" class="card-img-top" alt="Trending Movie">
-                            <div class="card-body">
-                                <h5 class="card-title">Spirited Away</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <h4>New Releases</h4>
-                    <div class="movie-grid">
-                        <div class="movie-card">
-                            <img src="2.jpg" class="card-img-top" alt="New Release Movie">
-                            <div class="card-body">
-                                <h5 class="card-title">Deadpool & Wolverine</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <h4>Action</h4>
-                    <div class="movie-grid">
-                        <div class="movie-card">
-                            <img src="3.jpeg" class="card-img-top" alt="Action Movie">
-                            <div class="card-body">
-                                <h5 class="card-title">Furiosa: A Mad Max Saga</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <h2 class="text-center mb-4">Genre</h2>
+            <div class="row" id="genre-section">
+                
             </div>
         </div>
     </section>
 
-    
-    <footer class="text-center py-4">
+    <section id="movies" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Popular Movies</h2>
+            <div class="row" id="popular-movies-section">
+                
+            </div>
+        </div>
+    </section>
+
+    <section id="tv-series" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">TV Series</h2>
+            <div class="row" id="tv-series-section">
+                
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center py-4 bg-dark text-light">
         <div class="container">
             <p>&copy; 2024 NetPeke. All rights reserved.</p>
         </div>
     </footer>
 
-    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const apiKey = 'fe754f63'; 
+
+            
+            function fetchRandomMovies(count) {
+                const titles = ['Inception', 'Avengers', 'Matrix', 'Die Hard', 'Mad Max'];
+                const randomTitles = titles.sort(() => 0.5 - Math.random()).slice(0, count);
+                const promises = randomTitles.map(title =>
+                    fetch(`https://www.omdbapi.com/?apikey=${apiKey}&t=${title}`)
+                        .then(response => response.json())
+                );
+                return Promise.all(promises);
+            }
+
+            
+            fetchRandomMovies(3)
+                .then(movies => {
+                    const carouselInner = document.querySelector('.carousel-inner');
+                    movies.forEach((movie, index) => {
+                        const carouselItem = document.createElement('div');
+                        carouselItem.className = `carousel-item ${index === 0 ? 'active' : ''}`;
+                        carouselItem.innerHTML = `
+                            <img src="${movie.Poster}" class="d-block w-100" alt="${movie.Title}">
+                        `;
+                        carouselInner.appendChild(carouselItem);
+                    });
+                })
+                .catch(error => console.error('Error fetching featured movies:', error));
+
+            
+            fetchRandomMovies(6)
+                .then(movies => {
+                    const popularMoviesSection = document.getElementById('popular-movies-section');
+                    movies.forEach(movie => {
+                        const colDiv = document.createElement('div');
+                        colDiv.className = 'col-md-4 mb-4';
+                        colDiv.innerHTML = `
+                            <div class="movie-card">
+                                <img src="${movie.Poster}" class="card-img-top" alt="${movie.Title}">
+                                <div class="card-body">
+                                    <h5 class="card-title">${movie.Title}</h5>
+                                </div>
+                            </div>
+                        `;
+                        popularMoviesSection.appendChild(colDiv);
+                    });
+                })
+                .catch(error => console.error('Error fetching popular movies:', error));
+
+            
+            const genres = ['Action', 'Comedy', 'Drama'];
+            genres.forEach(genre => {
+                fetchRandomMovies(3)
+                    .then(movies => {
+                        const genreSection = document.getElementById('genre-section');
+                        const colDiv = document.createElement('div');
+                        colDiv.className = 'col-md-4 mb-4';
+                        colDiv.innerHTML = `
+                            <h4>${genre}</h4>
+                            <div class="movie-grid">
+                                ${movies.map(movie => `
+                                    <div class="movie-card">
+                                        <img src="${movie.Poster}" class="card-img-top" alt="${movie.Title}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${movie.Title}</h5>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                        genreSection.appendChild(colDiv);
+                    });
+            });
+
+            
+            fetchRandomMovies(3)
+                .then(movies => {
+                    const tvSeriesSection = document.getElementById('tv-series-section');
+                    movies.forEach(movie => {
+                        const colDiv = document.createElement('div');
+                        colDiv.className = 'col-md-4 mb-4';
+                        colDiv.innerHTML = `
+                            <div class="movie-card">
+                                <img src="${movie.Poster}" class="card-img-top" alt="${movie.Title}">
+                                <div class="card-body">
+                                    <h5 class="card-title">${movie.Title}</h5>
+                                </div>
+                            </div>
+                        `;
+                        tvSeriesSection.appendChild(colDiv);
+                    });
+                })
+                .catch(error => console.error('Error fetching TV series:', error));
+        });
+    </script>
 </body>
 </html>
