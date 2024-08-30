@@ -10,12 +10,40 @@
         .scrolling-wrapper {
             overflow-x: auto;
             white-space: nowrap;
+            padding: 1rem 0;
         }
 
         .scrolling-wrapper .card {
             display: inline-block;
             width: 150px; 
             margin: 0 0.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .scrolling-wrapper .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-img-top {
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .card-body {
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+            border-radius: 0 0 10px 10px;
+            color: white;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            margin: 0.5rem 0;
+            font-weight: bold;
         }
 
         .carousel {
@@ -27,32 +55,50 @@
             align-items: center;
         }
 
-        .carousel-item {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
         .carousel-item img {
             width: 100%;
             height: 500px; 
             object-fit: cover;
+            border-radius: 10px;
         }
 
-        #searchResults {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+        .navbar {
+            background-color: #1a3caa; 
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem; 
+        }
+
+        body {
+            padding-top: 56px; 
         }
 
         #videoEmbed {
-            display: none; 
+            display: none;
             margin-top: 20px;
         }
 
         #videoEmbed iframe {
             width: 100%;
             height: 500px;
+        }
+
+        .movie-detail-card {
+            display: none; /* Initially hidden */
+            margin-top: 20px;
+            max-width: 800px; /* Limit the width of the detail card */
+            margin: auto; /* Center the card */
+        }
+
+        .movie-detail-card .card-body {
+            padding: 1.5rem; /* Padding inside the detail card */
+        }
+
+        .movie-detail-card img {
+            width: 100%; /* Ensure the image fits within the card */
+            height: auto;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -132,6 +178,16 @@
         </div>
         <div id="searchResults" class="container mt-4">
             
+        </div>
+    </div>
+
+    <!-- Movie Detail Card -->
+    <div class="movie-detail-card card">
+        <img src="" class="card-img-top" alt="Movie Poster">
+        <div class="card-body">
+            <h5 class="card-title">Movie Title</h5>
+            <p class="card-text">Movie description goes here...</p>
+            <button class="btn btn-primary" id="backButton">Back</button>
         </div>
     </div>
 
