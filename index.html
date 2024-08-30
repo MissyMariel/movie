@@ -3,190 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NetPeke</title>
-    
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <title>Movie Website</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .scrolling-wrapper {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .scrolling-wrapper .card {
+            display: inline-block;
+            width: 150px; 
+            margin: 0 0.5rem;
+        }
+
+        .carousel {
+            margin-top: 20px;
+        }
+
+        .carousel-inner {
+            display: flex;
+            align-items: center;
+        }
+
+        .carousel-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 500px; 
+            object-fit: cover;
+        }
+
+        #searchResults {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        
+        #videoEmbed {
+            display: none; 
+            margin-top: 20px;
+        }
+
+        #videoEmbed iframe {
+            width: 100%;
+            height: 500px;
+        }
+    </style>
 </head>
 <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-red">
+        <a class="navbar-brand" href="#">NetPeke</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" id="home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="popular">Popular Movies</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="genresDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Genres
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="genresDropdown" id="genresDropdownMenu">
+                       
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="countriesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Countries
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="countriesDropdown" id="countriesDropdownMenu">
+                        
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="tv-series">TV Series</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">NetPeke</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#genre">Genre</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#movies">Movies</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#tv-series">TV Series</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-
-    <section id="home" class="featured py-5">
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-                
-            </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </section>
-
-    <section id="genre" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-4">Genre</h2>
-            <div class="row" id="genre-section">
-                
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group mb-4">
+                    <input type="text" class="form-control" placeholder="Search for movies..." id="searchInput">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button" id="searchButton">Search</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="movies" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-4">Popular Movies</h2>
-            <div class="row" id="popular-movies-section">
-                
-            </div>
+   
+    <div id="movieCarousel" class="carousel slide mb-4" data-ride="carousel">
+        <div class="carousel-inner">
+            
         </div>
-    </section>
+        <a class="carousel-control-prev" href="#movieCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#movieCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
 
-    <section id="tv-series" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-4">TV Series</h2>
-            <div class="row" id="tv-series-section">
-                
-            </div>
+    
+    <div class="container mt-4">
+        <h3>Popular Movies</h3>
+        <div id="popularMovies" class="scrolling-wrapper">
+          
         </div>
-    </section>
+        <h3 class="mt-4">TV Series</h3>
+        <div id="tvSeriesList" class="scrolling-wrapper">
+            
+        </div>
+        <div id="searchResults" class="container mt-4">
+            
+        </div>
+    </div>
 
-    <footer class="text-center py-4 bg-dark text-light">
-        <div class="container">
-            <p>&copy; 2024 NetPeke. All rights reserved.</p>
-        </div>
-    </footer>
+ 
+    <div id="videoEmbed">
+        <iframe src="" frameborder="0" allowfullscreen></iframe>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const apiKey = 'fe754f63'; 
-
-            
-            function fetchRandomMovies(count) {
-                const titles = ['Inception', 'Avengers', 'Matrix', 'Die Hard', 'Mad Max'];
-                const randomTitles = titles.sort(() => 0.5 - Math.random()).slice(0, count);
-                const promises = randomTitles.map(title =>
-                    fetch(`https://www.omdbapi.com/?apikey=${apiKey}&t=${title}`)
-                        .then(response => response.json())
-                );
-                return Promise.all(promises);
-            }
-
-            
-            fetchRandomMovies(3)
-                .then(movies => {
-                    const carouselInner = document.querySelector('.carousel-inner');
-                    movies.forEach((movie, index) => {
-                        const carouselItem = document.createElement('div');
-                        carouselItem.className = `carousel-item ${index === 0 ? 'active' : ''}`;
-                        carouselItem.innerHTML = `
-                            <img src="${movie.Poster}" class="d-block w-100" alt="${movie.Title}">
-                        `;
-                        carouselInner.appendChild(carouselItem);
-                    });
-                })
-                .catch(error => console.error('Error fetching featured movies:', error));
-
-            
-            fetchRandomMovies(6)
-                .then(movies => {
-                    const popularMoviesSection = document.getElementById('popular-movies-section');
-                    movies.forEach(movie => {
-                        const colDiv = document.createElement('div');
-                        colDiv.className = 'col-md-4 mb-4';
-                        colDiv.innerHTML = `
-                            <div class="movie-card">
-                                <img src="${movie.Poster}" class="card-img-top" alt="${movie.Title}">
-                                <div class="card-body">
-                                    <h5 class="card-title">${movie.Title}</h5>
-                                </div>
-                            </div>
-                        `;
-                        popularMoviesSection.appendChild(colDiv);
-                    });
-                })
-                .catch(error => console.error('Error fetching popular movies:', error));
-
-            
-            const genres = ['Action', 'Comedy', 'Drama'];
-            genres.forEach(genre => {
-                fetchRandomMovies(3)
-                    .then(movies => {
-                        const genreSection = document.getElementById('genre-section');
-                        const colDiv = document.createElement('div');
-                        colDiv.className = 'col-md-4 mb-4';
-                        colDiv.innerHTML = `
-                            <h4>${genre}</h4>
-                            <div class="movie-grid">
-                                ${movies.map(movie => `
-                                    <div class="movie-card">
-                                        <img src="${movie.Poster}" class="card-img-top" alt="${movie.Title}">
-                                        <div class="card-body">
-                                            <h5 class="card-title">${movie.Title}</h5>
-                                        </div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        `;
-                        genreSection.appendChild(colDiv);
-                    });
-            });
-
-            
-            fetchRandomMovies(3)
-                .then(movies => {
-                    const tvSeriesSection = document.getElementById('tv-series-section');
-                    movies.forEach(movie => {
-                        const colDiv = document.createElement('div');
-                        colDiv.className = 'col-md-4 mb-4';
-                        colDiv.innerHTML = `
-                            <div class="movie-card">
-                                <img src="${movie.Poster}" class="card-img-top" alt="${movie.Title}">
-                                <div class="card-body">
-                                    <h5 class="card-title">${movie.Title}</h5>
-                                </div>
-                            </div>
-                        `;
-                        tvSeriesSection.appendChild(colDiv);
-                    });
-                })
-                .catch(error => console.error('Error fetching TV series:', error));
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
