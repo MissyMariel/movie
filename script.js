@@ -2,7 +2,6 @@ const apiKey = '59cce6804530f5694ef1f7c260137749';
 const apiUrl = 'https://api.themoviedb.org/3'; 
 const imageBaseUrl = 'https://image.tmdb.org/t/p/w500'; 
 
-
 function fetchAndDisplayCarouselMovies() {
     fetch(`${apiUrl}/movie/popular?api_key=${apiKey}`)
         .then(response => response.json())
@@ -75,7 +74,6 @@ function fetchTVSeries() {
                 tvSeriesContainer.innerHTML += itemElement;
             });
 
-            
             document.querySelectorAll('#tvSeriesList .card').forEach(card => {
                 card.addEventListener('click', () => {
                     const movieId = card.getAttribute('data-movie-id');
@@ -84,7 +82,6 @@ function fetchTVSeries() {
             });
         });
 }
-
 
 function searchMovies(query) {
     fetch(`${apiUrl}/search/movie?api_key=${apiKey}&query=${query}`)
@@ -108,7 +105,6 @@ function searchMovies(query) {
                     searchResultsContainer.innerHTML += itemElement;
                 });
 
-                
                 document.querySelectorAll('#searchResults .card').forEach(card => {
                     card.addEventListener('click', () => {
                         const movieId = card.getAttribute('data-movie-id');
@@ -125,23 +121,22 @@ function searchMovies(query) {
         });
 }
 
-
 function showMovieEmbed(movieId) {
     const videoEmbed = document.getElementById('videoEmbed');
     const iframe = videoEmbed.querySelector('iframe');
 
-    
-    iframe.src = `https://vidsrc.xyz/embed/movie?tmdb=${movieId}/`;
+    // Construct the embed URL with the movie ID
+    iframe.src = `https://vidsrc.xyz/embed/movie/${movieId}`;
     videoEmbed.style.display = 'block'; 
 
-
+    // Hide other elements
     document.getElementById('popularMovies').style.display = 'none'; 
     document.getElementById('tvSeriesList').style.display = 'none'; 
     document.querySelector('.carousel').style.display = 'none'; 
     document.getElementById('searchResults').style.display = 'none'; 
 }
 
-// danhi ang Event listeners for navigation
+// Event listeners for navigation
 document.getElementById('home').addEventListener('click', () => {
     fetchAndDisplayCarouselMovies();
     fetchPopularMovies();
@@ -172,14 +167,12 @@ document.getElementById('tv-series').addEventListener('click', () => {
     document.getElementById('videoEmbed').style.display = 'none'; 
 });
 
-
 document.getElementById('searchButton').addEventListener('click', () => {
     const query = document.getElementById('searchInput').value;
     if (query) {
         searchMovies(query);
     }
 });
-
 
 fetchAndDisplayCarouselMovies();
 fetchPopularMovies();
